@@ -1,20 +1,11 @@
-// Для тестирования
-
-
-
-
-
 class ElementsOfStatistic {
-    public static void main(String[] args) {
-        ElementsOfStatistic list = new ElementsOfStatistic();
-        list.addNumber(5);
-        list.addNumber(3);
-        list.addNumber(7);
-        list.addNumber(3);
-        list.addNumber(2);
-
-
-        list.printAllCharacteristics();
+    //создание полей
+    private double[] numbers;
+    private int count;
+    // 1. Создание пустого списка
+    public ElementsOfStatistic() {
+        numbers = new double[100];
+        count = 0;
     }
     // Вспомогательный метод для получения отсортированной копии
     private double[] getSortedCopy() {
@@ -33,14 +24,6 @@ class ElementsOfStatistic {
                 }
             }
         return a;
-    }
-    //создание полей
-    private double[] numbers;
-    private int count;
-    // 1. Создание пустого списка
-    public ElementsOfStatistic() {
-        numbers = new double[100];
-        count = 0;
     }
     // 2. Вывод по возрастанию
     public void SortPoVozrastaniyu() {
