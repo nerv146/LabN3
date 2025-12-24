@@ -1,3 +1,45 @@
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class Main {
+    public static PrintStream out = System.out;
+    public static Scanner in = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        // Test 1
+            ElementsOfStatistic list = new ElementsOfStatistic();
+            list.addNumber(5);
+            list.addNumber(3);
+            list.addNumber(7);
+            list.addNumber(3);
+            list.addNumber(2);
+            list.printAllCharacteristics();
+
+        // Test 2
+            ElementsOfStatistic list1 = new ElementsOfStatistic();
+            list1.addNumber(5.5);
+            list1.addNumber(4.4);
+            list1.addNumber(3.3);
+            list1.addNumber(2.2);
+            list1.addNumber(1.1);
+            list1.printAllCharacteristics();
+
+
+
+        // Test 3
+        {
+            ElementsOfStatistic list2 = new ElementsOfStatistic();
+            list2.addNumber(0);
+            list2.addNumber(0);
+            list2.addNumber(1);
+            list2.addNumber(31);
+            list2.addNumber(1);
+            list2.printAllCharacteristics();
+        }
+
+
+    }
+}
 class ElementsOfStatistic {
     //создание полей
     private double[] numbers;
@@ -102,11 +144,11 @@ class ElementsOfStatistic {
     }
     // 8. Среднее геометрическое
     public double sredneeGeom() {
-        if (count == 0)
-            return 0;
         double product = 1;
         for (int i = 0; i < count; i++)
             product *= numbers[i];
+        if (count == 0 || product < 0)
+            return 0;
         return Math.pow(product, 1.0 / count);
     }
     // 9. Среднее гармоническое
@@ -124,7 +166,9 @@ class ElementsOfStatistic {
     // 10. Мода
     public void Mode() {
         double[] a = getSortedCopy();
+        double modlist[] = new double[a.length];
         double bestNum = a[0];
+        int modcount = 0;
         int best = 1;
         int current = 1;
         boolean hasMode = false;
@@ -133,16 +177,29 @@ class ElementsOfStatistic {
                 current++;
             else
                 current = 1;
-            if (current > best) {
+            if (current >= best) {
                 best = current;
                 bestNum = a[i];
                 hasMode = true;
+                modlist[i] = best; //массив записывает новые моды
+                modcount+=1;
             }
+            else
+                modcount = 0;
         }
-        if (best > 1 && hasMode)
+        if (best > 1 && hasMode && modcount == 1)
             System.out.printf("Мода: %.2f (встречается %d раз)\n", bestNum, best);
         else
-            System.out.println("Моды нет");
+            if (modcount == 0)
+                System.out.println("Моды нет");
+            else {
+                System.out.println("Значения моды: ");
+                for (int i = 0; i < modlist.length ; i++) {
+                    if (modlist[i]==best) // проверка на финальную моду, сопоставление со значением в массиве `a`
+                        System.out.printf(" %2.f", a[i]);
+                }
+                System.out.printf("\n Встречаются по %d раз",best);
+            }
     }
     // 11. Медиана
     public double median() {
